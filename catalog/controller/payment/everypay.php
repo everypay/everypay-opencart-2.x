@@ -154,7 +154,7 @@ class ControllerPaymentEverypay extends Controller
         if ($inst) {
             $installments = json_decode($inst, true);
             foreach ($installments as $i) {
-                if ($total >= $i['from'] || $total <= $i['to']) {
+                if ($total >= $i['from'] && $total <= $i['to']) {
                     return $i['max'];
                 }
             }

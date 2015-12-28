@@ -19,7 +19,7 @@ $_['entry_status'] = 'Κατάσταση';
 $_['entry_sort_order'] = 'Σειρά Ταξινόμησης';
 
 //tooltips
-$_['help_key_id'] = 'The Api Public Key and Secret Key you will recieve from the API keys section of Everypay Dashboard. Use test Key for testing purposes.';
+$_['help_key_id'] = 'Το Public Key και Secret Key που υπάρχουν στην κατηγορία `Κλειδία API` στο Dashboard της Everypay. Χρησιμοποιείστε τα κλειδιά του Sandbox για δοκιμαστικες πληρωμές.';
 $_['help_order_status'] = 'Η κατάσταση της παραγγελίας όταν ολοκληρωθεί μια πληρωμή.';
 
 // Error

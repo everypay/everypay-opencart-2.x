@@ -44,6 +44,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sandbox"><?php echo $entry_sandbox; ?></label>
+                        <div class="col-sm-10">
+                            <input type="hidden" name="everypay_sandbox" id="_input-sandbox" value="0" />
+                            <input type="checkbox" name="everypay_sandbox" id="input-sandbox" <?php echo $everypay_sandbox ? 'checked': null?> class="form-control" value="1" />
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
                         <div class="col-sm-10">
                             <select name="everypay_order_status_id" id="input-order-status" class="form-control">

@@ -17,6 +17,7 @@ $_['entry_secret_key'] = 'Secret Key';
 $_['entry_order_status'] = 'Order Status';
 $_['entry_status'] = 'Status';
 $_['entry_sort_order'] = 'Sort Order';
+$_['entry_sandbox'] = 'Sandbox mode';
 
 //tooltips
 $_['help_key_id'] = 'The Api Public Key and Secret Key you will recieve from the API keys section of Everypay Dashboard. Use test Key for testing purposes.';

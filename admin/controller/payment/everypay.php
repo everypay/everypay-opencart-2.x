@@ -42,6 +42,7 @@ class ControllerPaymentEverypay extends Controller
         $data['entry_order_status'] = $this->language->get('entry_order_status');
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
+        $data['entry_sandbox'] = $this->language->get('entry_sandbox');
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
@@ -119,6 +120,12 @@ class ControllerPaymentEverypay extends Controller
             $data['everypay_installments'] = $this->request->post['everypay_installments'];
         } else {
             $data['everypay_installments'] = $this->config->get('everypay_installments');
+        }
+
+        if (isset($this->request->post['everypay_sandbox'])) {
+            $data['everypay_sandbox'] = $this->request->post['everypay_sandbox'];
+        } else {
+            $data['everypay_sandbox'] = $this->config->get('everypay_sandbox');
         }
 
         $this->load->model('localisation/order_status');

@@ -6,6 +6,7 @@ class ControllerPaymentEverypay extends Controller
 {
     public function index()
     {
+        $this->language->load('payment/everypay');
         $data['button_confirm'] = $this->language->get('button_confirm');
 
         $this->load->model('checkout/order');
@@ -21,7 +22,8 @@ class ControllerPaymentEverypay extends Controller
         $data['phone'] = $order_info['telephone'];
         $data['name'] = $this->config->get('config_name');
         $data['lang'] = $this->session->data['language'];
-        $data['sandbox'] = false;
+        $data['sandbox'] = $this->config->get('everypay_sandbox');
+        $data['sandbox_warning'] = $this->language->get('text_sandbox_warning');
         $data['return_url'] = $this->url->link('payment/everypay/callback', '', 'SSL');
         $data['installments'] = $this->getInstallments($order_info['total']);
 
@@ -89,7 +91,7 @@ class ControllerPaymentEverypay extends Controller
                 } else {
                     $this->model_checkout_order->addOrderHistory(
                         $merchant_order_id,
-                        $this->config->get('razorpay_order_status_id'),
+                        $this->config->get('everypay_order_status_id'),
                         'Payment Successful. EveryPay Payment Id:'.$response_array['token']
                     );
                 }
@@ -122,7 +124,10 @@ class ControllerPaymentEverypay extends Controller
 
     private function getCurlHandle($token, $amount)
     {
-        $url = 'https://api.everypay.gr/payments';
+        $sandbox = $this->config->get('everypay_sandbox');
+        $url = 1 == $sandbox
+            ? 'https://sandbox-api.everypay.gr/payments'
+            : 'https://api.everypay.gr/payments';
         $secret_key = $this->config->get('everypay_secret_key');
         $data = array(
             'amount' => $amount,

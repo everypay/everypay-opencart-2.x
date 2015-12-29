@@ -2,9 +2,9 @@
 <script type="text/javascript">
 var EVERYPAY_DATA = {
     amount: <?= $total ?>, //1euro
-    description: "Button with jSON init",
-    key: "<?= $public_key?>",
-    locale: "<?=$lang?>",
+    description: "Order #<?php echo $merchant_order_id?>",
+    key: "<?php echo $public_key?>",
+    locale: "<?php echo $lang?>",
     callback: '',
     <?php if (false !== $installments): ?>
     max_installments: <?php echo $installments ?>,

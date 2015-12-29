@@ -155,6 +155,7 @@ class ControllerPaymentEverypay extends Controller
 
     private function getInstallments($total)
     {
+        $total = round($total / 100, 2);
         $inst = htmlspecialchars_decode($this->config->get('everypay_installments'));
         if ($inst) {
             $installments = json_decode($inst, true);

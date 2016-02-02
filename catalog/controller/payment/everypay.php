@@ -49,7 +49,8 @@ class ControllerPaymentEverypay extends Controller
             $error = '';
 
             try {
-                $ch = $this->getCurlHandle($everypayToken, $amount);
+                $phone = str_replace(['+', '-', ' '], null, $order_info['telephone']);
+                $ch = $this->getCurlHandle($everypayToken, $amount, $order_info['email'], $phone, $merchant_order_id);
 
                 //execute post
                 $result = curl_exec($ch);
@@ -122,7 +123,7 @@ class ControllerPaymentEverypay extends Controller
         }
     }
 
-    private function getCurlHandle($token, $amount)
+    private function getCurlHandle($token, $amount, $email, $phone, $orderId)
     {
         $sandbox = $this->config->get('everypay_sandbox');
         $url = 1 == $sandbox
@@ -132,6 +133,9 @@ class ControllerPaymentEverypay extends Controller
         $data = array(
             'amount' => $amount,
             'token' => $token,
+            'payee_email' => $email,
+            'payee_phone' => $phone,
+            'description' => 'Order #' . $orderId . ' - ' . round($amount / 100, 2) . '€',
         );
         if (false !== $max = $this->getInstallments($amount)) {
             $data['max_installments'] = $max;

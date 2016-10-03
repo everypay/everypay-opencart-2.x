@@ -27,11 +27,7 @@ class ControllerPaymentEverypay extends Controller
         $data['return_url'] = $this->url->link('payment/everypay/callback', '', 'SSL');
         $data['installments'] = $this->getInstallments($order_info['total']);
 
-        if (file_exists(DIR_TEMPLATE.$this->config->get('config_template').'/template/payment/everypay.tpl')) {
-            return $this->load->view($this->config->get('config_template').'/template/payment/everypay.tpl', $data);
-        } else {
-            return $this->load->view('default/template/payment/everypay.tpl', $data);
-        }
+        return $this->load->view('payment/everypay.tpl', $data);
     }
 
 
@@ -74,12 +70,14 @@ class ControllerPaymentEverypay extends Controller
                         }
                     }
                 }
+                $this->log->write($error);
 
                 //close connection
                 curl_close($ch);
             } catch (Exception $e) {
                 $success = false;
                 $error = 'OPENCART_ERROR:Request to EveryPay Failed';
+                $this->log->write($error);
             }
 
             if ($success === true) {
@@ -169,7 +167,6 @@ class ControllerPaymentEverypay extends Controller
                 }
             }
         }
-
 
         return false;
     }

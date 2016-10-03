@@ -2,11 +2,11 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-class ModelPaymentEverypay extends Model
+class ModelExtensionPaymentEverypay extends Model
 {
     public function getMethod($address, $total)
     {
-        $this->language->load('payment/everypay');
+        $this->language->load('extension/payment/everypay');
 
         return array(
             'code' => 'everypay',

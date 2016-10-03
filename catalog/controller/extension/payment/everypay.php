@@ -2,11 +2,11 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-class ControllerPaymentEverypay extends Controller
+class ControllerExtensionPaymentEverypay extends Controller
 {
     public function index()
     {
-        $this->language->load('payment/everypay');
+        $this->language->load('extension/payment/everypay');
         $data['button_confirm'] = $this->language->get('button_confirm');
 
         $this->load->model('checkout/order');
@@ -24,10 +24,10 @@ class ControllerPaymentEverypay extends Controller
         $data['lang'] = $this->session->data['language'];
         $data['sandbox'] = $this->config->get('everypay_sandbox');
         $data['sandbox_warning'] = $this->language->get('text_sandbox_warning');
-        $data['return_url'] = $this->url->link('payment/everypay/callback', '', 'SSL');
+        $data['return_url'] = $this->url->link('extension/payment/everypay/callback', '', 'SSL');
         $data['installments'] = $this->getInstallments($order_info['total']);
 
-        return $this->load->view('payment/everypay.tpl', $data);
+        return $this->load->view('extension/payment/everypay.tpl', $data);
     }
 
 
@@ -70,14 +70,12 @@ class ControllerPaymentEverypay extends Controller
                         }
                     }
                 }
-                $this->log->write($error);
 
                 //close connection
                 curl_close($ch);
             } catch (Exception $e) {
                 $success = false;
                 $error = 'OPENCART_ERROR:Request to EveryPay Failed';
-                $this->log->write($error);
             }
 
             if ($success === true) {
@@ -167,6 +165,7 @@ class ControllerPaymentEverypay extends Controller
                 }
             }
         }
+
 
         return false;
     }

@@ -2,7 +2,7 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-class ControllerPaymentEverypay extends Controller
+class ControllerExtensionPaymentEverypay extends Controller
 {
     private $error = array();
 
@@ -10,7 +10,7 @@ class ControllerPaymentEverypay extends Controller
     {
         $this->document->addScript('view/javascript/everypay/js/mustache.min.js');
         $this->document->addScript('view/javascript/everypay/js/installments.js');
-        $this->language->load('payment/everypay');
+        $this->language->load('extension/payment/everypay');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
@@ -21,7 +21,7 @@ class ControllerPaymentEverypay extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('extension/payment', 'token='.$this->session->data['token'], 'SSL'));
+            $this->response->redirect($this->url->link('extension/extension', 'token='.$this->session->data['token'] . '&type=payment', 'SSL'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -78,25 +78,25 @@ class ControllerPaymentEverypay extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token='.$this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('common/dashboard', 'token='.$this->session->data['token'], 'SSL'),
             'separator' => false,
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_payment'),
-            'href' => $this->url->link('extension/payment', 'token='.$this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('extension/extension', 'token='.$this->session->data['token'] . '&type=payment', 'SSL'),
             'separator' => ' :: ',
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('payment/everypay', 'token='.$this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('extension/payment/everypay', 'token='.$this->session->data['token'], 'SSL'),
             'separator' => ' :: ',
         );
 
-        $data['action'] = $this->url->link('payment/everypay', 'token='.$this->session->data['token'], 'SSL');
+        $data['action'] = $this->url->link('extension/payment/everypay', 'token='.$this->session->data['token'], 'SSL');
 
-        $data['cancel'] = $this->url->link('extension/payment', 'token='.$this->session->data['token'], 'SSL');
+        $data['cancel'] = $this->url->link('extension/extension', 'token='.$this->session->data['token'] . '&type=payment', 'SSL');
 
         if (isset($this->request->post['everypay_public_key'])) {
             $data['everypay_public_key'] = $this->request->post['everypay_public_key'];
@@ -144,7 +144,7 @@ class ControllerPaymentEverypay extends Controller
             $data['everypay_sort_order'] = $this->config->get('everypay_sort_order');
         }
 
-        $this->template = 'payment/everypay.tpl';
+        $this->template = 'extension/payment/everypay.tpl';
         $this->children = array(
             'common/header',
             'common/footer',
@@ -153,12 +153,12 @@ class ControllerPaymentEverypay extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
 
-        $this->response->setOutput($this->load->view('payment/everypay.tpl', $data));
+        $this->response->setOutput($this->load->view('extension/payment/everypay.tpl', $data));
     }
 
     protected function validate()
     {
-        if (!$this->user->hasPermission('modify', 'payment/everypay')) {
+        if (!$this->user->hasPermission('modify', 'extension/payment/everypay')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
         if (empty($this->request->post['everypay_public_key'])) {

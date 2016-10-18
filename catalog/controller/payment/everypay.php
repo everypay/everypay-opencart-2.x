@@ -68,7 +68,7 @@ class ControllerPaymentEverypay extends Controller
                         $success = false;
 
                         if (!empty($response_array['error']['code'])) {
-                            $error = $response_array['error']['code'].':'.$response_array['error']['description'];
+                            $error = $response_array['error']['code'].':'.$response_array['error']['message'];
                         } else {
                             $error = 'EVERYPAY_ERROR:Invalid Response <br/>'.$result;
                         }
